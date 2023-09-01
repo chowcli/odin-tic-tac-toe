@@ -28,6 +28,12 @@ const gameController = (() => {
       target.textContent = gameBoard.getValueOfIndex(cellIndex);
       roundSetUp.countRound();
     }
+
+    if (target.closest("#resetBtn")) {
+      roundSetUp.resetRound();
+      gameBoard.resetBoard();
+      document.querySelectorAll(".cell").forEach(div => (div.textContent = ""));
+    }
   });
 })();
 
