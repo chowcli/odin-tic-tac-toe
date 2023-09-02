@@ -29,11 +29,11 @@ const gameController = (() => {
 
       const result = checkWinner(cellIndex);
       if (result.isWinner) {
-        alert(`Player ${result.winnerMarker} wins!`);
+        displayResultMess(result, currMarker);
         return;
       }
-      if (!result.isWinner && roundSetUp.getRoundNum() === 10) {
-        alert(`The game is a draw`);
+      if (!result.isWinner && roundSetUp.getRoundNum() === 9) {
+        displayResultMess(result, currMarker);
         return;
       }
 
@@ -105,4 +105,26 @@ const checkWinner = index => {
       return { isWinner: true, winnerMarker: currMarker };
   }
   return { isWinner: false, winnerMarker: null };
+};
+
+const displayResultMess = (result, currMarker) => {
+  const modal = document.querySelector(".modal");
+  const resultMess = document.querySelector(".resultMess");
+  const restartBtn = document.getElementById("restartBtn");
+
+  if (result.isWinner) {
+    modal.showModal();
+    resultMess.textContent = `Player ${currMarker} wins!`;
+  }
+  if (!result.isWinner) {
+    modal.showModal();
+    resultMess.textContent = `It's a draw!`;
+  }
+
+  restartBtn.addEventListener("click", () => {
+    roundSetUp.resetRound();
+    gameBoard.resetBoard();
+    document.querySelectorAll(".cell").forEach(div => (div.textContent = ""));
+    modal.close();
+  });
 };
