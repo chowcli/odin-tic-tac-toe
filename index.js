@@ -27,7 +27,7 @@ const gameController = (() => {
 
       target.textContent = gameBoard.getValueOfIndex(cellIndex);
 
-      const result = checkWinner(cellIndex);
+      const result = checkWinner();
       if (result.isWinner) {
         displayResultMess(result, currMarker);
         return;
@@ -81,7 +81,7 @@ const roundSetUp = (() => {
 })();
 
 // Check winner
-const checkWinner = index => {
+const checkWinner = () => {
   const winCondition = [
     // check row
     [0, 1, 2],
