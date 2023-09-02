@@ -26,6 +26,17 @@ const gameController = (() => {
       gameBoard.insertMark(cellIndex, currMarker);
 
       target.textContent = gameBoard.getValueOfIndex(cellIndex);
+
+      const result = checkWinner(cellIndex);
+      if (result.isWinner) {
+        alert(`Player ${result.winnerMarker} wins!`);
+        return;
+      }
+      if (!result.isWinner && roundSetUp.getRoundNum() === 10) {
+        alert(`The game is a draw`);
+        return;
+      }
+
       roundSetUp.countRound();
     }
 
@@ -62,7 +73,36 @@ const roundSetUp = (() => {
     return round % 2 === 1 ? player1.getMarker() : player2.getMarker();
   };
 
+  const getRoundNum = () => round;
+
   const resetRound = () => (round = 1);
 
-  return { countRound, getCurrRoundMarker, resetRound };
+  return { countRound, getCurrRoundMarker, resetRound, getRoundNum };
 })();
+
+// Check winner
+const checkWinner = index => {
+  const winCondition = [
+    // check row
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    //check column
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    // check diagonal
+    [0, 4, 8],
+    [2, 4, 6],
+  ];
+
+  const currMarker = roundSetUp.getCurrRoundMarker();
+
+  for (const condition of winCondition) {
+    if (
+      condition.every(index => gameBoard.getValueOfIndex(index) === currMarker)
+    )
+      return { isWinner: true, winnerMarker: currMarker };
+  }
+  return { isWinner: false, winnerMarker: null };
+};
