@@ -60,6 +60,7 @@ body {
 }
 
 #resetBtn {
+  font-family: inherit;
   font-size: 2rem;
   font-weight: 600;
   padding: 10px 20px;
@@ -67,10 +68,10 @@ body {
 
   display: grid;
   grid-template-columns: 40px 90px;
+  place-items: end start;
 
   border-radius: 10px;
   border: 2px solid black;
-  place-items: center;
   cursor: pointer;
 
   color: #264653;
