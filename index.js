@@ -27,14 +27,17 @@ const gameController = (() => {
 
       target.textContent = gameBoard.getValueOfIndex(cellIndex);
 
-      const result = checkWinner();
-      if (result.isWinner) {
-        displayResultMess(result, currMarker);
-        return;
-      }
-      if (!result.isWinner && roundSetUp.getRoundNum() === 9) {
-        displayResultMess(result, currMarker);
-        return;
+      // only check winner starting from round 5
+      if (roundSetUp.getRoundNum() >= 5) {
+        const result = checkWinner();
+        if (result.isWinner) {
+          displayResultMess(result, currMarker);
+          return;
+        }
+        if (!result.isWinner && roundSetUp.getRoundNum() === 9) {
+          displayResultMess(result, currMarker);
+          return;
+        }
       }
 
       roundSetUp.countRound();
